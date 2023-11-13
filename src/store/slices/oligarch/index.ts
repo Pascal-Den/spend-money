@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchBillionaires } from "@/store/slices/oligarch/operation";
-import { BillionaireFull } from "@/types";
+import { OligarchType } from "@/types";
 
 interface billionairesSliceState {
-  data: BillionaireFull;
+  data: OligarchType[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
