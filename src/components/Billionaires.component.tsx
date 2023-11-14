@@ -1,25 +1,34 @@
 "use client";
 
 import Image from "next/image";
-import { OligarchType } from "@/types";
+import Autocomplete from "@/components/Autocomplete.component";
 
-export function Billionaires({
-  createdAt,
-  updatedAt,
-  squareImage,
-  id,
-  personName,
-  netWorth,
-}: OligarchType) {
+type BillionairesProps = {
+  squareImage: string | undefined;
+  netWorth: number | undefined;
+};
+
+export function Billionaires({ squareImage, netWorth }: BillionairesProps) {
   return (
-    <div>
-      <Image
-        src={squareImage}
-        alt="avatar"
-        width={32}
-        height={32}
-        className="w-8 h-8 rounded-full"
-      />
-    </div>
+    <>
+      <div className="flex-center flex-col bg-gray-100 py-10">
+        {squareImage ? (
+          <Image
+            src={squareImage}
+            alt="avatar"
+            className="rounded-full"
+            width={124}
+            height={124}
+          />
+        ) : null}
+        <Autocomplete />
+      </div>
+      <div className="money-bar bg-gradient-to-b from-emerald-500 to-teal-400 text-white py-5 px-10 my-5 font-roboto font-semibold text-2xl text-center mt-10">
+        {netWorth?.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+        })}
+      </div>
+    </>
   );
 }

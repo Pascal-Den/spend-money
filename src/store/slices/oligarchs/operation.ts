@@ -1,12 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "@/core/api";
 
-export const fetchBillionaire = createAsyncThunk(
-  "billionaire/fetchBillionaire",
-  async (id: string, thunkAPI) => {
+export const fetchBillionaires = createAsyncThunk(
+  "billionaires/fetchBillionaires",
+  async (_, thunkAPI) => {
     try {
-      const response = await api.get(`/api/oligarchs/${id}`);
-
+      const response = await api.get("/api/oligarchs");
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e);

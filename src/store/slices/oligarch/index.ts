@@ -1,37 +1,44 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBillionaires } from "@/store/slices/oligarch/operation";
 import { OligarchType } from "@/types";
+import { fetchBillionaire } from "@/store/slices/oligarch/operation";
 
-interface billionairesSliceState {
-  data: OligarchType[];
+interface billionaireSliceState {
+  data: OligarchType | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  query: string | null;
 }
 
-const initialState: billionairesSliceState = {
-  data: [],
+const initialState: billionaireSliceState = {
+  data: null,
   status: "idle",
   error: null,
+  query: null,
 };
 
-const billionairesSlice = createSlice({
-  name: "billionaires",
+const billionaireSlice = createSlice({
+  name: "billionaire",
   initialState,
-  reducers: {},
+  reducers: {
+    updateQuery: (state, action) => {
+      state.query = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchBillionaires.pending, (state) => {
+      .addCase(fetchBillionaire.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchBillionaires.fulfilled, (state, action) => {
+      .addCase(fetchBillionaire.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
       })
-      .addCase(fetchBillionaires.rejected, (state, action) => {
+      .addCase(fetchBillionaire.rejected, (state: any, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
   },
 });
 
-export default billionairesSlice.reducer;
+export const { updateQuery } = billionaireSlice.actions;
+export default billionaireSlice.reducer;
