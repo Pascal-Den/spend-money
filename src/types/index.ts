@@ -3,6 +3,12 @@ export type OligarchType = {
   personName: string;
   squareImage: string;
   netWorth: number;
-  createdAt: Date;
-  updatedAt: Date;
+};
+
+export type GoodType = {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
 };

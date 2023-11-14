@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Autocomplete from "@/components/Autocomplete.component";
+import Selected from "@/components/Selected.component";
 
 type BillionairesProps = {
   squareImage: string | undefined;
@@ -21,7 +21,7 @@ export function Billionaires({ squareImage, netWorth }: BillionairesProps) {
             height={124}
           />
         ) : null}
-        <Autocomplete />
+        <Selected />
       </div>
       <div className="money-bar bg-gradient-to-b from-emerald-500 to-teal-400 text-white py-5 px-10 my-5 font-roboto font-semibold text-2xl text-center mt-10">
         {netWorth?.toLocaleString("en-US", {

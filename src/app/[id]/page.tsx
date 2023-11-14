@@ -5,11 +5,14 @@ import { useEffect } from "react";
 import { fetchBillionaire } from "@/store/slices/oligarch/operation";
 import { Billionaires } from "@/components/Billionaires.component";
 import { fetchBillionaires } from "@/store/slices/oligarchs/operation";
+import { fetchGoods } from "@/store/slices/goods/operation";
+import Good from "@/components/Good.component";
 
-export default function Home({ params }: any) {
+export default function HomeId({ params }: any) {
   const dispatch = useAppDispatch();
 
   const { data } = useAppSelector((state) => state.billionaire);
+  const goods = useAppSelector((state) => state.goods.data);
 
   useEffect(() => {
     dispatch(fetchBillionaire(params.id));
@@ -19,6 +22,10 @@ export default function Home({ params }: any) {
     dispatch(fetchBillionaires());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchGoods());
+  }, []);
+
   return (
     <div className="container mx-auto">
       <Billionaires
@@ -26,6 +33,17 @@ export default function Home({ params }: any) {
         netWorth={data?.netWorth}
         squareImage={data?.squareImage}
       />
+      <div className="flex flex-wrap justify-between">
+        {goods?.map((good) => (
+          <Good
+            image={good.image}
+            name={good.name}
+            price={good.price}
+            key={good.id}
+            quantity={good.quantity}
+          />
+        ))}
+      </div>
     </div>
   );
 }

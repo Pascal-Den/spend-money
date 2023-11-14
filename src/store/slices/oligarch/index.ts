@@ -20,8 +20,33 @@ const billionaireSlice = createSlice({
   name: "billionaire",
   initialState,
   reducers: {
-    updateQuery: (state, action) => {
-      state.query = action.payload;
+    increase: (state, action) => {
+      if (state.data) {
+        const updatedNetWorth = state.data.netWorth + action.payload;
+        state.data = {
+          ...state.data,
+          netWorth: updatedNetWorth,
+        };
+      }
+    },
+    decrease: (state, action) => {
+      if (state.data) {
+        const updatedNetWorth = state.data.netWorth - action.payload;
+        state.data = {
+          ...state.data,
+          netWorth: updatedNetWorth,
+        };
+      }
+    },
+    decreaseMore: (state, action) => {
+      if (state.data) {
+        const updatedNetWorth =
+          state.data.netWorth - action.payload.price * action.payload;
+        state.data = {
+          ...state.data,
+          netWorth: updatedNetWorth,
+        };
+      }
     },
   },
   extraReducers: (builder) => {
@@ -40,5 +65,5 @@ const billionaireSlice = createSlice({
   },
 });
 
-export const { updateQuery } = billionaireSlice.actions;
+export const { increase, decrease, decreaseMore } = billionaireSlice.actions;
 export default billionaireSlice.reducer;
