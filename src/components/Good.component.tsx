@@ -19,6 +19,10 @@ export default function Good({ name, price, image }: GoodProps) {
 
     setQuantity(newQuantity);
 
+    if (newQuantity < 0) {
+      return;
+    }
+
     if (difference > 0) {
       dispatch(decrease(price * difference));
     } else {
@@ -58,6 +62,7 @@ export default function Good({ name, price, image }: GoodProps) {
         <button
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2"
           onClick={increaseHandler}
+          disabled={quantity <= 0} // Вимикаємо кнопку "Sell", якщо кількість <= 0
         >
           Sell
         </button>
