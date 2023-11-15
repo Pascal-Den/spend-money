@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { decrease, increase } from "@/store/slices/oligarch";
@@ -17,6 +17,14 @@ export default function Good({ name, price, image, id }: GoodProps) {
   const { data } = useAppSelector((state) => state.billionaire);
 
   const changeQuantityHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (e.target.value.length > 0 && e.target.value.charAt(0) === "0") {
+      const newValue = parseInt(e.target.value, 10);
+      setQuantity(newValue);
+      setPreviousQuantity(newValue);
+      return;
+    }
     const newQuantity = Number(e.target.value);
     const difference = newQuantity - previousQuantity;
 
@@ -35,12 +43,14 @@ export default function Good({ name, price, image, id }: GoodProps) {
       dispatch(setGoodToFavorite({ id, name, price, quantity: newQuantity }));
     } else {
       dispatch(increase(price * Math.abs(difference)));
-      // dispatch(setGoodMinus({ id, quantity: newQuantity }));
+      dispatch(setGoodMinus({ id, quantity: newQuantity }));
     }
 
     setPreviousQuantity(newQuantity);
   };
-
+  useEffect(() => {
+    console.log(quantity);
+  }, [quantity]);
   const increaseHandler = () => {
     dispatch(increase(price));
     dispatch(setGoodMinus({ id }));
@@ -86,10 +96,10 @@ export default function Good({ name, price, image, id }: GoodProps) {
         </button>
         <input
           className="border rounded py-2 px-4 w-[170px] focus:appearance-none no-spinners"
-          type="number"
+          type="text"
           value={quantity}
           onChange={changeQuantityHandler}
-          placeholder="Input field"
+          placeholder=""
         />
         <button
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mx-2"
