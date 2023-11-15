@@ -7,6 +7,7 @@ import { Billionaires } from "@/components/Billionaires.component";
 import { fetchBillionaires } from "@/store/slices/oligarchs/operation";
 import { fetchGoods } from "@/store/slices/goods/operation";
 import Good from "@/components/Good.component";
+import Check from "@/components/Check";
 
 export default function HomeId({ params }: any) {
   const dispatch = useAppDispatch();
@@ -20,9 +21,6 @@ export default function HomeId({ params }: any) {
 
   useEffect(() => {
     dispatch(fetchBillionaires());
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchGoods());
   }, []);
 
@@ -40,10 +38,12 @@ export default function HomeId({ params }: any) {
             name={good.name}
             price={good.price}
             key={good.id}
-            quantity={good.quantity}
+            id={good.id}
           />
         ))}
       </div>
+
+      <Check />
     </div>
   );
 }

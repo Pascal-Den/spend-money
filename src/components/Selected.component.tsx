@@ -1,12 +1,14 @@
 import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { OligarchType } from "@/types";
+import { setGoodClear } from "@/store/slices/favorite";
 
 export default function Selected() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.billionaires);
   const { data: selectedBillionaire } = useAppSelector(
     (state) => state.billionaire,
@@ -14,6 +16,7 @@ export default function Selected() {
 
   const handleSelectionChange = (person: OligarchType) => {
     router.push(`/${person.id}`); // Assuming person.id represents the route
+    dispatch(setGoodClear());
   };
 
   return (

@@ -1,17 +1,20 @@
 import React, { ChangeEvent, useState } from "react";
 import Image from "next/image";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { decrease, increase } from "@/store/slices/oligarch";
+import { setGoodMinus, setGoodToFavorite } from "@/store/slices/favorite";
 
 type GoodProps = {
   name: string;
   price: number;
   image: string;
+  id: string;
 };
-export default function Good({ name, price, image }: GoodProps) {
+export default function Good({ name, price, image, id }: GoodProps) {
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState<number>(0);
   const [previousQuantity, setPreviousQuantity] = useState<number>(0);
+  const { data } = useAppSelector((state) => state.billionaire);
 
   const changeQuantityHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const newQuantity = Number(e.target.value);
@@ -23,10 +26,16 @@ export default function Good({ name, price, image }: GoodProps) {
       return;
     }
 
+    if (!data || newQuantity < 0 || newQuantity * price > data.netWorth) {
+      return;
+    }
+
     if (difference > 0) {
       dispatch(decrease(price * difference));
+      dispatch(setGoodToFavorite({ id, name, price, quantity: newQuantity }));
     } else {
       dispatch(increase(price * Math.abs(difference)));
+      // dispatch(setGoodMinus({ id, quantity: newQuantity }));
     }
 
     setPreviousQuantity(newQuantity);
@@ -34,12 +43,17 @@ export default function Good({ name, price, image }: GoodProps) {
 
   const increaseHandler = () => {
     dispatch(increase(price));
+    dispatch(setGoodMinus({ id }));
+
     setQuantity((prevState) => prevState - 1);
+    setPreviousQuantity((prevState) => prevState - 1);
   };
 
   const decreaseHandler = () => {
     dispatch(decrease(price));
+    dispatch(setGoodToFavorite({ id, name, price }));
     setQuantity((prevState) => prevState + 1);
+    setPreviousQuantity((prevState) => prevState + 1);
   };
 
   return (
@@ -60,14 +74,18 @@ export default function Good({ name, price, image }: GoodProps) {
 
       <div className="px-6 pt-4 pb-2 flex items-center justify-center">
         <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2"
+          className={`font-bold py-2 px-4 rounded mx-2 ${
+            quantity <= 0
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-red-500 hover:bg-red-700"
+          } text-white`}
           onClick={increaseHandler}
-          disabled={quantity <= 0} // Вимикаємо кнопку "Sell", якщо кількість <= 0
+          disabled={quantity <= 0}
         >
           Sell
         </button>
         <input
-          className="border rounded py-2 px-4 w-[170px]"
+          className="border rounded py-2 px-4 w-[170px] focus:appearance-none no-spinners"
           type="number"
           value={quantity}
           onChange={changeQuantityHandler}
