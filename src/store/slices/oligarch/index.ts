@@ -19,26 +19,7 @@ const initialState: billionaireSliceState = {
 const billionaireSlice = createSlice({
   name: "billionaire",
   initialState,
-  reducers: {
-    increase: (state, action) => {
-      if (state.data) {
-        const updatedNetWorth = state.data.netWorth + action.payload;
-        state.data = {
-          ...state.data,
-          netWorth: updatedNetWorth,
-        };
-      }
-    },
-    decrease: (state, action) => {
-      if (state.data) {
-        const updatedNetWorth = state.data.netWorth - action.payload;
-        state.data = {
-          ...state.data,
-          netWorth: updatedNetWorth,
-        };
-      }
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchBillionaire.pending, (state) => {
@@ -55,5 +36,4 @@ const billionaireSlice = createSlice({
   },
 });
 
-export const { increase, decrease } = billionaireSlice.actions;
 export default billionaireSlice.reducer;

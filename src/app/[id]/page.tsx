@@ -5,15 +5,17 @@ import { useEffect } from "react";
 import { fetchBillionaire } from "@/store/slices/oligarch/operation";
 import { Billionaires } from "@/components/Billionaires.component";
 import { fetchBillionaires } from "@/store/slices/oligarchs/operation";
-import { fetchGoods } from "@/store/slices/goods/operation";
+
 import Good from "@/components/Good.component";
 import Check from "@/components/Check";
+import { OligarchType } from "@/types";
+import { fetchFavorite } from "@/store/slices/favorite/operation";
 
 export default function HomeId({ params }: any) {
   const dispatch = useAppDispatch();
 
   const { data } = useAppSelector((state) => state.billionaire);
-  const goods = useAppSelector((state) => state.goods.data);
+  const { favorite } = useAppSelector((state) => state.favorite);
 
   useEffect(() => {
     dispatch(fetchBillionaire(params.id));
@@ -21,23 +23,34 @@ export default function HomeId({ params }: any) {
 
   useEffect(() => {
     dispatch(fetchBillionaires());
-    dispatch(fetchGoods());
+    dispatch(fetchFavorite());
   }, []);
+
+  useEffect(() => {}, []);
+
+  const arrayData: OligarchType[] = [];
+  if (data) {
+    arrayData.push(data);
+  }
 
   return (
     <div className="container mx-auto">
-      <Billionaires
-        key={data?.id}
-        netWorth={data?.netWorth}
-        squareImage={data?.squareImage}
-      />
+      {arrayData?.map((billionaire) => (
+        <Billionaires
+          key={billionaire.id}
+          netWorth={billionaire.netWorth}
+          squareImage={billionaire.squareImage}
+        />
+      ))}
+
       <div className="flex flex-wrap justify-between">
-        {goods?.map((good) => (
+        {favorite?.map((good) => (
           <Good
             image={good.image}
             name={good.name}
             price={good.price}
             key={good.id}
+            quantity={good.quantity}
             id={good.id}
           />
         ))}

@@ -1,69 +1,58 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent } from "react";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { decrease, increase } from "@/store/slices/oligarch";
-import { setGoodMinus, setGoodToFavorite } from "@/store/slices/favorite";
+
+import {
+  onChangeNetWorth,
+  setGoodMinus,
+  setGoodToFavorite,
+} from "@/store/slices/favorite";
 
 type GoodProps = {
   name: string;
   price: number;
   image: string;
   id: string;
+  quantity: number;
 };
-export default function Good({ name, price, image, id }: GoodProps) {
+
+export default function Good({ name, price, image, id, quantity }: GoodProps) {
   const dispatch = useAppDispatch();
-  const [quantity, setQuantity] = useState<number>(0);
-  const [previousQuantity, setPreviousQuantity] = useState<number>(0);
-  const { data } = useAppSelector((state) => state.billionaire);
+  const { fullPrice } = useAppSelector((state) => state.favorite);
+  const netWorth = useAppSelector((state) => state.billionaire.data?.netWorth);
 
   const changeQuantityHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+    const value = e.target.value;
 
-    if (e.target.value.length > 0 && e.target.value.charAt(0) === "0") {
-      const newValue = parseInt(e.target.value, 10);
-      setQuantity(newValue);
-      setPreviousQuantity(newValue);
+    const rest = netWorth && netWorth - Number(value) * price;
+
+    console.log(rest);
+    if (value.length === 0) {
+      dispatch(onChangeNetWorth({ id, quantity: 0 }));
       return;
     }
-    const newQuantity = Number(e.target.value);
-    const difference = newQuantity - previousQuantity;
-
-    setQuantity(newQuantity);
-
-    if (newQuantity < 0) {
-      return;
-    }
-
-    if (!data || newQuantity < 0 || newQuantity * price > data.netWorth) {
-      return;
-    }
-
-    if (difference > 0) {
-      dispatch(decrease(price * difference));
-      dispatch(setGoodToFavorite({ id, name, price, quantity: newQuantity }));
+    if (value.length > 0 && value.charAt(0) === "0") {
+      const newValue = parseInt(value, 10);
+      dispatch(
+        onChangeNetWorth({
+          id,
+          quantity: newValue,
+          netWorth,
+          rest,
+        }),
+      );
     } else {
-      dispatch(increase(price * Math.abs(difference)));
-      dispatch(setGoodMinus({ id, quantity: newQuantity }));
+      const newValue = parseInt(value, 10);
+      dispatch(onChangeNetWorth({ id, quantity: newValue, netWorth, rest }));
     }
-
-    setPreviousQuantity(newQuantity);
   };
-  useEffect(() => {
-    console.log(quantity);
-  }, [quantity]);
-  const increaseHandler = () => {
-    dispatch(increase(price));
-    dispatch(setGoodMinus({ id }));
 
-    setQuantity((prevState) => prevState - 1);
-    setPreviousQuantity((prevState) => prevState - 1);
+  const increaseHandler = () => {
+    dispatch(setGoodMinus({ id }));
   };
 
   const decreaseHandler = () => {
-    dispatch(decrease(price));
     dispatch(setGoodToFavorite({ id, name, price }));
-    setQuantity((prevState) => prevState + 1);
-    setPreviousQuantity((prevState) => prevState + 1);
   };
 
   return (
@@ -84,13 +73,10 @@ export default function Good({ name, price, image, id }: GoodProps) {
 
       <div className="px-6 pt-4 pb-2 flex items-center justify-center">
         <button
-          className={`font-bold py-2 px-4 rounded mx-2 ${
-            quantity <= 0
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-red-500 hover:bg-red-700"
-          } text-white`}
+          className={
+            "font-bold py-2 px-4 rounded mx-2 bg-red-500 hover:bg-red-700 text-white"
+          }
           onClick={increaseHandler}
-          disabled={quantity <= 0}
         >
           Sell
         </button>
@@ -99,11 +85,15 @@ export default function Good({ name, price, image, id }: GoodProps) {
           type="text"
           value={quantity}
           onChange={changeQuantityHandler}
-          placeholder=""
         />
         <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mx-2"
+          className={`font-bold py-2 px-4 rounded mx-2 ${
+            netWorth && fullPrice + price < netWorth
+              ? "bg-green-500 hover:bg-green-700 text-white"
+              : "bg-gray-500 cursor-not-allowed text-gray-300"
+          }`}
           onClick={decreaseHandler}
+          disabled={!(netWorth && fullPrice + price < netWorth)}
         >
           Buy
         </button>
