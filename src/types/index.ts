@@ -5,10 +5,11 @@ export type OligarchType = {
   netWorth: number;
 };
 
-export type GoodType = {
+export type ProductType = {
   id: string;
   name: string;
   price: number;
   image: string;
   quantity: number;
+  fullPrice?: number;
 };

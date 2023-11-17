@@ -6,7 +6,7 @@ import { fetchBillionaire } from "@/store/slices/oligarch/operation";
 import { Billionaires } from "@/components/Billionaires.component";
 import { fetchBillionaires } from "@/store/slices/oligarchs/operation";
 
-import Good from "@/components/Good.component";
+import Product from "@/components/Product.component";
 import Check from "@/components/Check";
 import { OligarchType } from "@/types";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
@@ -15,7 +15,7 @@ export default function HomeId({ params }: any) {
   const dispatch = useAppDispatch();
 
   const { data } = useAppSelector((state) => state.billionaire);
-  const { favorite } = useAppSelector((state) => state.favorite);
+  const { favorite, fullPrice } = useAppSelector((state) => state.favorite);
 
   useEffect(() => {
     dispatch(fetchBillionaire(params.id));
@@ -44,14 +44,14 @@ export default function HomeId({ params }: any) {
       ))}
 
       <div className="flex flex-wrap justify-between">
-        {favorite?.map((good) => (
-          <Good
-            image={good.image}
-            name={good.name}
-            price={good.price}
-            key={good.id}
-            quantity={good.quantity}
-            id={good.id}
+        {favorite?.map((product) => (
+          <Product
+            image={product.image}
+            name={product.name}
+            price={product.price}
+            key={product.id}
+            quantity={product.quantity}
+            id={product.id}
           />
         ))}
       </div>

@@ -4,7 +4,7 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { OligarchType } from "@/types";
-import { setGoodClear } from "@/store/slices/favorite";
+import { setProductClear } from "@/store/slices/favorite";
 
 export default function Selected() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function Selected() {
 
   const handleSelectionChange = (person: OligarchType) => {
     router.push(`/${person.id}`); // Assuming person.id represents the route
-    dispatch(setGoodClear());
+    dispatch(setProductClear());
   };
 
   return (

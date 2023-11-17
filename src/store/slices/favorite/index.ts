@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GoodType } from "@/types";
+import { ProductType } from "@/types";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
 
 type initialStateType = {
-  favorite: GoodType[];
+  favorite: ProductType[];
+  status: "idle" | "loading" | "succeeded" | "failed";
   fullPrice: number;
 };
 
 const initialState: initialStateType = {
   favorite: [],
+  status: "idle",
   fullPrice: 0,
 };
 
@@ -16,7 +18,7 @@ const favoriteSlice = createSlice({
   name: "favorite",
   initialState,
   reducers: {
-    setGoodToFavorite: (state, action) => {
+    setProductToFavorite: (state, action) => {
       const findItem = state.favorite.find(
         (obj) => obj.id === action.payload.id,
       );
@@ -36,8 +38,9 @@ const favoriteSlice = createSlice({
       }, 0);
     },
 
-    setGoodMinus: (state, action) => {
+    setProductMinus: (state, action) => {
       const { id, quantity } = action.payload;
+
       const findItemIndex = state.favorite.findIndex((obj) => obj.id === id);
 
       if (findItemIndex !== -1) {
@@ -57,19 +60,11 @@ const favoriteSlice = createSlice({
         }, 0);
       }
     },
-    // onGoodChange: (state, action) => {
-    //   const findItem = state.favorite.find(
-    //     (obj) => obj.id === action.payload.id,
-    //   );
-    //
-    //   if (findItem) {
-    //     findItem.quantity = action.payload.quantity;
-    //   }
-    // },
 
     onChangeNetWorth: (state, action) => {
       const { id, quantity, price, netWorth } = action.payload;
-      const rest = action.payload.rest;
+
+      const rest = netWorth && netWorth - state.fullPrice;
 
       const findItemIndex = state.favorite.findIndex((obj) => obj.id === id);
 
@@ -77,41 +72,53 @@ const favoriteSlice = createSlice({
 
       const findItem = state.favorite[findItemIndex];
 
-      if (rest / findItem.price < 1) {
-        const newQuantity = Math.floor(rest / findItem.price);
-        findItem.quantity = newQuantity;
+      console.log(rest, "rest");
+      if (rest <= 0) {
+        const totalPriceWithoutCurrent = state.favorite.reduce((acc, item) => {
+          if (item.id !== id) {
+            acc += item.price * item.quantity;
+          }
+          return acc;
+        }, 0);
+
+        const maxQuantityFromRest = Math.floor(
+          (netWorth - totalPriceWithoutCurrent) / price,
+        );
+        findItem.quantity = Math.min(maxQuantityFromRest, quantity);
       } else {
         findItem.quantity = quantity;
       }
 
-      const calculatedPrice = state.favorite.reduce((acc, item) => {
+      state.fullPrice = state.favorite.reduce((acc, item) => {
         acc += item.price * item.quantity;
         return acc;
       }, 0);
-
-      state.fullPrice = calculatedPrice;
     },
-    setGoodClear: (state) => {
+    setProductClear: (state) => {
       state.favorite = [];
       state.fullPrice = 0;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchFavorite.pending, (state) => {})
+      .addCase(fetchFavorite.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(fetchFavorite.fulfilled, (state, action) => {
         state.favorite = action.payload;
+        state.status = "succeeded";
       })
       .addCase(fetchFavorite.rejected, (state: any, action) => {
         state.error = action.error.message;
+        state.status = "failed";
       });
   },
 });
 
 export const {
-  setGoodToFavorite,
-  setGoodMinus,
-  setGoodClear,
+  setProductToFavorite,
+  setProductMinus,
+  setProductClear,
   onChangeNetWorth,
 } = favoriteSlice.actions;
 
