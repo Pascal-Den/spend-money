@@ -11,5 +11,10 @@ export type ProductType = {
   price: number;
   image: string;
   quantity: number;
-  fullPrice?: number;
+};
+
+export type ProductChangeType = {
+  id: string;
+  quantity: number;
+  netWorth: number;
 };

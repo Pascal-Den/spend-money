@@ -1,16 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { ProductType } from "@/types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ProductType, ProductChangeType } from "@/types";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
 
 type initialStateType = {
   favorite: ProductType[];
   status: "idle" | "loading" | "succeeded" | "failed";
+  error: string | null;
   fullPrice: number;
 };
 
 const initialState: initialStateType = {
   favorite: [],
   status: "idle",
+  error: null,
   fullPrice: 0,
 };
 
@@ -18,7 +20,7 @@ const favoriteSlice = createSlice({
   name: "favorite",
   initialState,
   reducers: {
-    setProductToFavorite: (state, action) => {
+    setProductToFavorite: (state, action: PayloadAction<ProductType>) => {
       const findItem = state.favorite.find(
         (obj) => obj.id === action.payload.id
       );
@@ -38,21 +40,15 @@ const favoriteSlice = createSlice({
       }, 0);
     },
 
-    setProductMinus: (state, action) => {
-      const { id, quantity } = action.payload;
-
-      const findItemIndex = state.favorite.findIndex((obj) => obj.id === id);
+    setProductMinus: (state, action: PayloadAction<string>) => {
+      const findItemIndex = state.favorite.findIndex(
+        (obj) => obj.id === action.payload
+      );
 
       if (findItemIndex !== -1) {
         const currentItem = state.favorite[findItemIndex];
 
-        if (quantity === 0) {
-          state.favorite.splice(findItemIndex, 1);
-        } else {
-          currentItem.quantity = quantity
-            ? Math.max(0, quantity)
-            : currentItem.quantity - 1;
-        }
+        currentItem.quantity = currentItem.quantity - 1;
 
         state.fullPrice = state.favorite.reduce((accum, item) => {
           accum += item.price * item.quantity;
@@ -61,21 +57,21 @@ const favoriteSlice = createSlice({
       }
     },
 
-    onChangeNetWorth: (state, action) => {
-      const { id, quantity, price, netWorth } = action.payload;
+    onChangeNetWorth: (state, action: PayloadAction<ProductChangeType>) => {
+      const { id, quantity, netWorth } = action.payload;
 
       const findItemIndex = state.favorite.findIndex((obj) => obj.id === id);
       if (findItemIndex === -1) return;
 
       const findItem = state.favorite[findItemIndex];
 
-      const fullPrice: number = state.favorite.reduce((acc, item) => {
+      const fullPrice = state.favorite.reduce((acc, item) => {
         acc +=
           item.id === id ? item.price * quantity : item.price * item.quantity;
         return acc;
       }, 0);
 
-      const restQuantity = +Math.floor((netWorth - fullPrice) / price);
+      const restQuantity = +Math.floor((netWorth - fullPrice) / findItem.price);
 
       const quantityToProvide =
         restQuantity < 0 ? quantity + restQuantity : quantity;
@@ -101,8 +97,8 @@ const favoriteSlice = createSlice({
         state.favorite = action.payload;
         state.status = "succeeded";
       })
-      .addCase(fetchFavorite.rejected, (state: any, action) => {
-        state.error = action.error.message;
+      .addCase(fetchFavorite.rejected, (state, action) => {
+        state.error = action.error.message ?? null;
         state.status = "failed";
       });
   },

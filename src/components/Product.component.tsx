@@ -17,6 +17,8 @@ type ProductProps = {
   quantity: number;
 };
 
+
+
 export default function Product({
   name,
   price,
@@ -26,30 +28,26 @@ export default function Product({
 }: ProductProps) {
   const dispatch = useAppDispatch();
 
-  const netWorth = useAppSelector((state) => state.billionaire.data?.netWorth);
+  const netWorth = useAppSelector((state) => state.billionaire.data?.netWorth || 0);
   const fullPrice = useAppSelector((state) => state.favorite.fullPrice);
 
   const changeQuantityHandler = (e: ChangeEvent<HTMLInputElement>) => {
-
     const newValue = +e.target.value;
-
     dispatch(
       onChangeNetWorth({
         id,
         quantity: newValue,
-        price,
         netWorth, 
       })
     );
-
   };
 
   const increaseHandler = () => {
-    dispatch(setProductMinus({ id }));
+    dispatch(setProductMinus( id ));
   };
 
   const decreaseHandler = () => {
-    dispatch(setProductToFavorite({ id, quantity, name, price }));
+    dispatch(setProductToFavorite({ id, quantity, name, price, image }));
   };
 
   return (

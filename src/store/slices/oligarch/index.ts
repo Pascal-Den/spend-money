@@ -29,9 +29,9 @@ const billionaireSlice = createSlice({
         state.status = "succeeded";
         state.data = action.payload;
       })
-      .addCase(fetchBillionaire.rejected, (state: any, action) => {
+      .addCase(fetchBillionaire.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.error.message ?? null;
       });
   },
 });

@@ -7,7 +7,7 @@ import { Billionaires } from "@/components/Billionaires.component";
 import { fetchBillionaires } from "@/store/slices/oligarchs/operation";
 
 import Product from "@/components/Product.component";
-import Check from "@/components/Check";
+import Check from "@/components/Check.component";
 import { OligarchType } from "@/types";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
 

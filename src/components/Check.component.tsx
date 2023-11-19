@@ -16,10 +16,10 @@ export default function Check() {
               >
                 <div className="flex justify-between items-center">
                   <div className="text-lg font-semibold">{fav.name}</div>
-                  <div className="flex items-center">
-                    <div className="text-sm text-gray-600 mr-4">
+                    <div className="flex items-center">
+                      <div className="text-sm text-gray-600 mr-4">
                       x{fav.quantity}
-                    </div>
+                     </div>
                     <div className="text-base font-medium">{fav.price}$</div>
                   </div>
                 </div>
