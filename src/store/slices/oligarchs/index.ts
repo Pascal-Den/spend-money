@@ -27,6 +27,15 @@ const billionairesSlice = createSlice({
         }));
       }
     },
+    clearCurrency: (state, action) => { 
+      const firstItem = action.payload.rates[0];
+      if (state.data) {
+        state.data = state.data.map((item) => ({
+          ...item,
+          netWorth: item.netWorth / firstItem.rate,
+        }));
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -44,5 +53,5 @@ const billionairesSlice = createSlice({
   },
 });
 
-export const { changeCurrency } = billionairesSlice.actions;
+export const { changeCurrency, clearCurrency } = billionairesSlice.actions;
 export default billionairesSlice.reducer;

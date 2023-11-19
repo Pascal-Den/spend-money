@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { changeCurrency } from "@/store/slices/oligarchs";
+import { changeCurrency, clearCurrency } from "@/store/slices/oligarchs";
 import { useState } from "react";
 
 type NetWOrthProps = { 
@@ -17,12 +17,14 @@ export default function NetWorth({ remainingNetWorth }: NetWOrthProps) {
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCurrency(e.target.value);
 
-    console.log(e.target.value, 'e target');
-    
      if (e.target.value === 'UAH' ) {
       'work'
       dispatch(changeCurrency({rates}))
+    } else { 
+      dispatch(clearCurrency({rates}))
     }
+    
+
   };
 
   return (

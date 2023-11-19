@@ -24,7 +24,7 @@
     name,
     price,
     image,
-    id,
+    id, 
     quantity,
   }: ProductProps) {
     const dispatch = useAppDispatch();

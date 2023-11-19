@@ -15,7 +15,7 @@ import { fetchRates } from "@/store/slices/currency";
 export default function HomeId({ params }: {params: {id: string}}) {
   const dispatch = useAppDispatch();
 
-  const { data } = useAppSelector((state) => state.billionaire);
+  const { data } = useAppSelector((state) => state.billionaires);
   const { favorite } = useAppSelector((state) => state.favorite);
 
   useEffect(() => {
@@ -29,17 +29,17 @@ export default function HomeId({ params }: {params: {id: string}}) {
   }, [dispatch]);
 
 
-  const arrayData: OligarchType[] = [];
-  if (data) {
-    arrayData.push(data);
-  }
+  // const arrayData: OligarchType[] = [];
+  // if (data) {
+  //   arrayData.push(data);
+  // }
 
   return (
   <div className="bg-[#9FA4A3]">
  
     <div className="max-w-[1200px] mx-auto py-10 ">
    
-      {arrayData?.map((billionaire) => (
+      {data?.filter(billionaire => billionaire.id === params.id).map((billionaire) => (
         <Billionaires
           key={billionaire.id}
           netWorth={billionaire.netWorth}
