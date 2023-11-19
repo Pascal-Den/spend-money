@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     router.push("/rinat-akhmetov");
-  }, []);
+  }, [router]);
 
-  return <div className="container mx-auto"></div>;
+  return <div className="container mx-auto "></div>;
 }

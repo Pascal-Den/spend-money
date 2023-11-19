@@ -10,6 +10,7 @@ import Product from "@/components/Product.component";
 import Check from "@/components/Check.component";
 import { OligarchType } from "@/types";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
+import { fetchRates } from "@/store/slices/currency";
 
 export default function HomeId({ params }: {params: {id: string}}) {
   const dispatch = useAppDispatch();
@@ -23,13 +24,9 @@ export default function HomeId({ params }: {params: {id: string}}) {
 
   useEffect(() => {
     dispatch(fetchBillionaires());
-   
-  }, [dispatch]);
-
-  useEffect(() => { 
     dispatch(fetchFavorite());
-  }, [dispatch,data]) 
-
+    dispatch(fetchRates())
+  }, [dispatch]);
 
 
   const arrayData: OligarchType[] = [];
@@ -38,7 +35,10 @@ export default function HomeId({ params }: {params: {id: string}}) {
   }
 
   return (
-    <div className="container mx-auto">
+  <div className="bg-[#9FA4A3]">
+ 
+    <div className="max-w-[1200px] mx-auto py-10 ">
+   
       {arrayData?.map((billionaire) => (
         <Billionaires
           key={billionaire.id}
@@ -47,7 +47,7 @@ export default function HomeId({ params }: {params: {id: string}}) {
         />
       ))}
 
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap justify-between py-4">
         {favorite?.map((product) => (
           <Product
             image={product.image}
@@ -61,5 +61,6 @@ export default function HomeId({ params }: {params: {id: string}}) {
       </div>
       <Check />
     </div>
+  </div>
   );
 }

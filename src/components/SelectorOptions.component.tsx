@@ -19,7 +19,7 @@ export default function SelectorOptions({person}: SelectorOptionsProps) {
     key={person.id}
     className={({ active }) =>
       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-        active ? "bg-green-100 text-green-900" : "text-gray-900"
+        active ? "bg-[#D3C3B9] text-white" : "text-white"
       }`
     }
     value={person}
@@ -36,7 +36,7 @@ export default function SelectorOptions({person}: SelectorOptionsProps) {
           {person.personName}
         </span>
         {person.id === selectedBillionaire?.id ? (
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-[#D3C3B9]">
             <CheckIcon className="h-5 w-5" aria-hidden="true" />
           </span>
         ) : null}

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { fetchBillionaires } from "@/store/slices/oligarchs/operation";
 import { OligarchType } from "@/types";
 
@@ -17,7 +17,17 @@ const initialState: billionairesSliceState = {
 const billionairesSlice = createSlice({
   name: "billionaires",
   initialState,
-  reducers: {},
+  reducers: {
+    changeCurrency: (state, action: PayloadAction<any>) => {
+      const firstItem = action.payload.rates[0];
+      if (state.data) {
+        state.data = state.data.map((item) => ({
+          ...item,
+          netWorth: item.netWorth * firstItem.rate,
+        }));
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchBillionaires.pending, (state) => {
@@ -34,4 +44,5 @@ const billionairesSlice = createSlice({
   },
 });
 
+export const { changeCurrency } = billionairesSlice.actions;
 export default billionairesSlice.reducer;

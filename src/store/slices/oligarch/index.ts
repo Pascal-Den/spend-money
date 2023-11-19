@@ -36,4 +36,5 @@ const billionaireSlice = createSlice({
   },
 });
 
+
 export default billionaireSlice.reducer;

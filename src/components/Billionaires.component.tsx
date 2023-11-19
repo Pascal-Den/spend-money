@@ -3,6 +3,7 @@
   import Image from "next/image";
   import Selector from "@/components/Selector.component";
   import { useAppSelector } from "@/store/hooks";
+import NetWorth from "./NetWorth.component";
 
   type BillionairesProps = {
     squareImage: string;
@@ -12,30 +13,24 @@
   export function Billionaires({ squareImage, netWorth }: BillionairesProps) {
     const { fullPrice } = useAppSelector((state) => state.favorite);
     
-    const remainingNetWorth = netWorth - fullPrice;
+    const remainingNetWorth: number = netWorth - fullPrice;
  
 
     return (
-      <>
-        <div className="flex-center flex-col bg-gray-100 py-10">
-          {squareImage && (
-            <Image
-              src={squareImage}
-              alt="avatar"
-              className="rounded-full"
-              width={124}
-              height={124}
-            />
-          )}
-          <Selector />
+        <div className="flex items-center justify-between h-full sticky top-0   py-2">
+         <NetWorth remainingNetWorth={remainingNetWorth}/>
+          <div className="reletive">
+            {squareImage && (
+               <Image
+               src={squareImage}
+                alt="avatar "
+               className="rounded-full border-[3px] absolute top-[11px] ml-2 z-50"
+               width={100}
+               height={100}
+               />
+            )}
+            <Selector />
+          </div>
         </div>
-        <div className="money-bar bg-gradient-to-b from-emerald-500 to-teal-400 text-white py-5 px-10 my-5 font-roboto font-semibold text-2xl text-center mt-10">
-          {remainingNetWorth.toLocaleString("en-US", {
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: 0,
-          })}
-        </div>
-      </>
     );
   }
