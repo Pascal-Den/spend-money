@@ -11,7 +11,7 @@ import Check from "@/components/Check.component";
 import { OligarchType } from "@/types";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
 
-export default function HomeId({ params }: any) {
+export default function HomeId({ params }: {params: {id: string}}) {
   const dispatch = useAppDispatch();
 
   const { data } = useAppSelector((state) => state.billionaire);
@@ -23,8 +23,12 @@ export default function HomeId({ params }: any) {
 
   useEffect(() => {
     dispatch(fetchBillionaires());
-    dispatch(fetchFavorite());
+   
   }, [dispatch]);
+
+  useEffect(() => { 
+    dispatch(fetchFavorite());
+  }, [dispatch,data]) 
 
 
 
@@ -55,7 +59,6 @@ export default function HomeId({ params }: any) {
           />
         ))}
       </div>
-
       <Check />
     </div>
   );
