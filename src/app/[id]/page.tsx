@@ -15,7 +15,7 @@ export default function HomeId({ params }: any) {
   const dispatch = useAppDispatch();
 
   const { data } = useAppSelector((state) => state.billionaire);
-  const { favorite, fullPrice } = useAppSelector((state) => state.favorite);
+  const { favorite } = useAppSelector((state) => state.favorite);
 
   useEffect(() => {
     dispatch(fetchBillionaire(params.id));
@@ -24,9 +24,9 @@ export default function HomeId({ params }: any) {
   useEffect(() => {
     dispatch(fetchBillionaires());
     dispatch(fetchFavorite());
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {}, []);
+
 
   const arrayData: OligarchType[] = [];
   if (data) {

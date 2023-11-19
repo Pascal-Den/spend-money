@@ -20,7 +20,7 @@ const favoriteSlice = createSlice({
   reducers: {
     setProductToFavorite: (state, action) => {
       const findItem = state.favorite.find(
-        (obj) => obj.id === action.payload.id,
+        (obj) => obj.id === action.payload.id
       );
 
       if (findItem) {
@@ -64,30 +64,23 @@ const favoriteSlice = createSlice({
     onChangeNetWorth: (state, action) => {
       const { id, quantity, price, netWorth } = action.payload;
 
-      const rest = netWorth && netWorth - state.fullPrice;
-
       const findItemIndex = state.favorite.findIndex((obj) => obj.id === id);
-
       if (findItemIndex === -1) return;
 
       const findItem = state.favorite[findItemIndex];
 
-      console.log(rest, "rest");
-      if (rest <= 0) {
-        const totalPriceWithoutCurrent = state.favorite.reduce((acc, item) => {
-          if (item.id !== id) {
-            acc += item.price * item.quantity;
-          }
-          return acc;
-        }, 0);
+      const fullPrice: number = state.favorite.reduce((acc, item) => {
+        acc +=
+          item.id === id ? item.price * quantity : item.price * item.quantity;
+        return acc;
+      }, 0);
 
-        const maxQuantityFromRest = Math.floor(
-          (netWorth - totalPriceWithoutCurrent) / price,
-        );
-        findItem.quantity = Math.min(maxQuantityFromRest, quantity);
-      } else {
-        findItem.quantity = quantity;
-      }
+      const restQuantity = +Math.floor((netWorth - fullPrice) / price);
+
+      const quantityToProvide =
+        restQuantity < 0 ? quantity + restQuantity : quantity;
+
+      findItem.quantity = quantityToProvide;
 
       state.fullPrice = state.favorite.reduce((acc, item) => {
         acc += item.price * item.quantity;

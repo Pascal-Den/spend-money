@@ -6,6 +6,7 @@ import {
   onChangeNetWorth,
   setProductMinus,
   setProductToFavorite,
+
 } from "@/store/slices/favorite";
 
 type ProductProps = {
@@ -28,25 +29,19 @@ export default function Product({
   const netWorth = useAppSelector((state) => state.billionaire.data?.netWorth);
   const fullPrice = useAppSelector((state) => state.favorite.fullPrice);
 
-  console.log(fullPrice, "fullPrice");
-
   const changeQuantityHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = +e.target.value;
 
-    if (!newValue) {
-      dispatch(onChangeNetWorth({ id, quantity: 0 }));
-      return;
-    }
-    console.log(newValue, "value");
+    const newValue = +e.target.value;
 
     dispatch(
       onChangeNetWorth({
         id,
         quantity: newValue,
         price,
-        netWorth,
-      }),
+        netWorth, 
+      })
     );
+
   };
 
   const increaseHandler = () => {
@@ -92,6 +87,7 @@ export default function Product({
           property={"/[1-9]/g"}
           value={quantity}
           onChange={changeQuantityHandler}
+          disabled={netWorth && fullPrice > netWorth && quantity === 0 ? true : false}
         />
         <button
           className={`font-bold py-2 px-4 rounded mx-2 ${

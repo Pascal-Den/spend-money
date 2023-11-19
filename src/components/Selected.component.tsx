@@ -15,7 +15,7 @@ export default function Selected() {
   );
 
   const handleSelectionChange = (person: OligarchType) => {
-    router.push(`/${person.id}`); // Assuming person.id represents the route
+    router.push(`/${person.id}`); 
     dispatch(setProductClear());
   };
 

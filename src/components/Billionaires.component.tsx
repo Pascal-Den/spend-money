@@ -11,8 +11,7 @@ type BillionairesProps = {
 
 export function Billionaires({ squareImage, netWorth }: BillionairesProps) {
   const { fullPrice } = useAppSelector((state) => state.favorite);
-  console.log(fullPrice, "fullPrice");
-  console.log(netWorth - fullPrice, "netWorth - fullPrice");
+  
 
   return (
     <>
