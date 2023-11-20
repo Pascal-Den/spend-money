@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ProductType, ProductChangeType } from "@/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CurrencyType, ProductChangeType, ProductType } from "@/types";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
 
 type initialStateType = {
@@ -22,7 +22,7 @@ const favoriteSlice = createSlice({
   reducers: {
     setProductToFavorite: (state, action: PayloadAction<ProductType>) => {
       const findItem = state.favorite.find(
-        (obj) => obj.id === action.payload.id
+        (obj) => obj.id === action.payload.id,
       );
 
       if (findItem) {
@@ -42,7 +42,7 @@ const favoriteSlice = createSlice({
 
     setProductMinus: (state, action: PayloadAction<string>) => {
       const findItemIndex = state.favorite.findIndex(
-        (obj) => obj.id === action.payload
+        (obj) => obj.id === action.payload,
       );
 
       if (findItemIndex !== -1) {
@@ -73,10 +73,33 @@ const favoriteSlice = createSlice({
 
       const restQuantity = +Math.floor((netWorth - fullPrice) / findItem.price);
 
-      const quantityToProvide =
-        restQuantity < 0 ? quantity + restQuantity : quantity;
+      findItem.quantity = restQuantity < 0 ? quantity + restQuantity : quantity;
 
-      findItem.quantity = quantityToProvide;
+      state.fullPrice = state.favorite.reduce((acc, item) => {
+        acc += item.price * item.quantity;
+        return acc;
+      }, 0);
+    },
+    changeCurrencyProduct: (state, action: PayloadAction<CurrencyType[]>) => {
+      const firstItem = action.payload[0].rate;
+
+      state.favorite = state.favorite.map((item) => ({
+        ...item,
+        price: item.price * firstItem,
+      }));
+
+      state.fullPrice = state.favorite.reduce((acc, item) => {
+        acc += item.price * item.quantity;
+        return acc;
+      }, 0);
+    },
+    clearCurrencyProduct: (state, action: PayloadAction<CurrencyType[]>) => {
+      const firstItem = action.payload[0].rate;
+
+      state.favorite = state.favorite.map((item) => ({
+        ...item,
+        price: item.price / firstItem,
+      }));
 
       state.fullPrice = state.favorite.reduce((acc, item) => {
         acc += item.price * item.quantity;
@@ -109,6 +132,8 @@ export const {
   setProductMinus,
   setProductClear,
   onChangeNetWorth,
+  changeCurrencyProduct,
+  clearCurrencyProduct,
 } = favoriteSlice.actions;
 
 export default favoriteSlice.reducer;

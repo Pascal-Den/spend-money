@@ -1,5 +1,5 @@
 import { CurrencyType } from "@/types";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 type initialStateType = {
@@ -22,7 +22,6 @@ export const fetchRates = createAsyncThunk("currency/fetchRates", async () => {
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching dollar exchange rate:", error);
     throw error;
   }
 });
