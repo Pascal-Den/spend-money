@@ -3,6 +3,7 @@ import CheckPrice from "./CheckPrice.component";
 
 export default function Check() {
   const { favorite, fullPrice } = useAppSelector((state) => state.favorite);
+  const { isUsd } = useAppSelector((state) => state.billionaires);
 
   if (fullPrice) {
     return (
@@ -19,7 +20,10 @@ export default function Check() {
         ))}
         <div className="flex justify-between items-center mt-4">
           <span className="text-lg font-semibold">TOTAL</span>
-          <div className="text-2xl font-bold">${fullPrice.toFixed()}</div>
+          <div className="text-2xl font-bold">
+            {isUsd ? "$" : "₴"}
+            {fullPrice.toFixed()}
+          </div>
         </div>
       </div>
     );

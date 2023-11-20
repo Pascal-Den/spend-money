@@ -1,3 +1,5 @@
+import { useAppSelector } from "@/store/hooks";
+
 type CheckPriceProps = {
   quantity: number;
   id: string;
@@ -11,6 +13,7 @@ export default function CheckPrice({
   price,
   name,
 }: CheckPriceProps) {
+  const { isUsd } = useAppSelector((state) => state.billionaires);
   if (quantity > 0)
     return (
       <div
@@ -21,7 +24,10 @@ export default function CheckPrice({
           <div className="text-lg font-semibold">{name}</div>
           <div className="flex items-center">
             <div className="text-sm text-gray-600 mr-4">x{quantity}</div>
-            <div className="text-base font-medium">{price.toFixed(0)}$</div>
+            <div className="text-base font-medium">
+              {price.toFixed(0)}
+              {isUsd ? "$" : "₴"}
+            </div>
           </div>
         </div>
       </div>

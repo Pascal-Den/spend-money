@@ -6,12 +6,14 @@ interface billionairesSliceState {
   data: OligarchType[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  isUsd: boolean;
 }
 
 const initialState: billionairesSliceState = {
   data: [],
   status: "idle",
   error: null,
+  isUsd: true,
 };
 
 const billionairesSlice = createSlice({
@@ -27,6 +29,8 @@ const billionairesSlice = createSlice({
           netWorth: item.netWorth * firstItem,
         }));
       }
+
+      state.isUsd = false;
     },
     clearCurrency: (state, action: PayloadAction<CurrencyType[]>) => {
       const firstItem = action.payload[0];
@@ -36,6 +40,7 @@ const billionairesSlice = createSlice({
           netWorth: item.netWorth / firstItem.rate,
         }));
       }
+      state.isUsd = true;
     },
   },
   extraReducers: (builder) => {

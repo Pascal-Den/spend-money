@@ -9,17 +9,12 @@ import Product from "@/components/Product.component";
 import Check from "@/components/Check.component";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
 import { fetchRates } from "@/store/slices/currency";
-import { fetchBillionaire } from "@/store/slices/oligarch/operation";
 
 export default function HomeId({ params }: { params: { id: string } }) {
   const dispatch = useAppDispatch();
 
   const { data } = useAppSelector((state) => state.billionaires);
   const { favorite } = useAppSelector((state) => state.favorite);
-
-  useEffect(() => {
-    dispatch(fetchBillionaire(params.id));
-  }, [params, dispatch]);
 
   useEffect(() => {
     dispatch(fetchBillionaires());
@@ -36,6 +31,7 @@ export default function HomeId({ params }: { params: { id: string } }) {
             <Billionaires
               key={billionaire.id}
               netWorth={billionaire.netWorth}
+              id={billionaire.id}
               squareImage={billionaire.squareImage}
             />
           ))}
