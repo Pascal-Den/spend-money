@@ -17,6 +17,7 @@ export default function Selector({
   const { data } = useAppSelector((state) => state.billionaires);
 
   const handleSelectionChange = (person: OligarchType) => {
+    if (person.id === selectedBillionaire.id) return;
     router.push(`/${person.id}`);
     dispatch(setProductClear());
   };

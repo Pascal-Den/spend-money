@@ -18,14 +18,14 @@ export function Billionaires({ squareImage, netWorth, id }: BillionairesProps) {
   const remainingNetWorth: number = netWorth - fullPrice;
 
   return (
-    <div className="flex items-center justify-between h-full sticky top-0   py-2">
+    <div className="flex items-center justify-between h-full sticky top-0">
       <NetWorth remainingNetWorth={remainingNetWorth} />
       <div className="reletive">
         {squareImage && (
           <Image
             src={squareImage}
             alt="avatar "
-            className="rounded-full border-[3px] absolute top-[11px] ml-2 z-50"
+            className="rounded-full border-[3px] absolute ml-2 z-50 top-[3px]"
             width={100}
             height={100}
           />

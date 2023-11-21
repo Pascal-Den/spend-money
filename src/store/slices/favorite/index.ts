@@ -4,14 +4,14 @@ import { fetchFavorite } from "@/store/slices/favorite/operation";
 
 type initialStateType = {
   favorite: ProductType[];
-  status: "idle" | "loading" | "succeeded" | "failed";
+  loading: boolean;
   error: string | null;
   fullPrice: number;
 };
 
 const initialState: initialStateType = {
   favorite: [],
-  status: "idle",
+  loading: false,
   error: null,
   fullPrice: 0,
 };
@@ -114,15 +114,15 @@ const favoriteSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchFavorite.pending, (state) => {
-        state.status = "loading";
+        state.loading = true;
       })
       .addCase(fetchFavorite.fulfilled, (state, action) => {
         state.favorite = action.payload;
-        state.status = "succeeded";
+        state.loading = false;
       })
       .addCase(fetchFavorite.rejected, (state, action) => {
         state.error = action.error.message ?? null;
-        state.status = "failed";
+        state.loading = false;
       });
   },
 });
