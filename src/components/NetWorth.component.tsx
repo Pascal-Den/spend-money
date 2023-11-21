@@ -38,7 +38,7 @@ export default function NetWorth({ remainingNetWorth }: NetWorthProps) {
   };
 
   return (
-    <div className="w-[600px] max-w-[700px] h-[106px] bg-[#3D4D55] text-white py-5 px-10 font-roboto font-semibold text-4xl rounded-xl flex justify-between items-center">
+    <div className="lg:w-[500px] xl:w-[600px] md:w-[360px] max-w-[700px] h-[106px] bg-[#3D4D55] text-white py-5 px-10 md:py-2 md:px-4 font-semibold text-4xl md:text-2xl rounded-xl lg:text-4xl flex justify-between items-center">
       <div>{`${
         selectedCurrency === "USD" ? "$" : "₴"
       }${remainingNetWorth.toLocaleString()}`}</div>
@@ -48,7 +48,7 @@ export default function NetWorth({ remainingNetWorth }: NetWorthProps) {
           onChange={(newValue: string) => handleCurrencyChange(newValue)}
         >
           <div className="relative mt-1  ">
-            <Listbox.Button className="relative cu  rsor-pointer text-center text-white bg-[#3D4D55] w-[140px] rounded-lg py-2 pl-3 pr-10  shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 ">
+            <Listbox.Button className="relative cursor-pointer text-center text-white bg-[#3D4D55] sm:w-[120px] lg:w-[140px] rounded-lg py-2 pl-3 pr-10  shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 ">
               <span className="block truncate">{selectedCurrency}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon

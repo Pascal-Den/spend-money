@@ -63,7 +63,7 @@ export default function Product({
         <div className="flex-center">
           {image && (
             <Image
-              className="mx-auto min-w-[150px] min-h-[150px] pt-6 pl-6"
+              className="mx-auto  pt-6 pl-6 w-[150px] h-[150px]"
               src={image}
               alt={name}
               width={150}
@@ -72,7 +72,7 @@ export default function Product({
           )}
           <div className="px-6 py-4 text-center min-w-[200px] w-full">
             <div className="font-bold text-xl mb-2">{name}</div>
-            <div className="font-bold text-6xl text-green-700 ">
+            <div className="font-bold text-4xl text-green-700 ">
               {price.toFixed(0)} {isUsd ? "$" : "₴"}
             </div>
           </div>

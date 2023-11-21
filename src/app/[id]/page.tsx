@@ -25,7 +25,7 @@ export default function HomeId({ params }: { params: { id: string } }) {
 
   return (
     <div className="bg-[#9FA4A3] min-h-screen">
-      <div className="max-w-[1200px] mx-auto py-10">
+      <div className="container mx-auto py-10">
         {data
           ?.filter((billionaire) => billionaire.id === params.id)
           .map((billionaire) => (
