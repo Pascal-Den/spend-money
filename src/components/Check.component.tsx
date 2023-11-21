@@ -8,7 +8,9 @@ export default function Check() {
   if (fullPrice) {
     return (
       <div className="bg-gray-100 p-4 rounded-md my-6 max-w-[500px] mx-auto">
-        <div className="text-xl font-bold mb-4 text-center">Your Receipt</div>
+        <div className="text-2xl font-  bold mb-4 text-center">
+          Your Receipt
+        </div>
         {favorite.map((fav) => (
           <CheckPrice
             key={fav.id}
@@ -20,9 +22,9 @@ export default function Check() {
         ))}
         <div className="flex justify-between items-center mt-4">
           <span className="text-lg font-semibold">TOTAL</span>
-          <div className="text-2xl font-bold">
+          <div className="text-2xl font-bold text-green-700">
             {isUsd ? "$" : "₴"}
-            {fullPrice.toFixed()}
+            {fullPrice.toLocaleString()}
           </div>
         </div>
       </div>

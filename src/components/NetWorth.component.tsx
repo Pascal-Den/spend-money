@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { changeCurrency, clearCurrency } from "@/store/slices/oligarchs";
 import { Fragment, useState } from "react";
+import { animated, useSpring } from "@react-spring/web";
 import { useRouter } from "next/navigation";
 import {
   changeCurrencyProduct,
@@ -11,17 +12,25 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 type NetWorthProps = {
   remainingNetWorth: number;
+  initialNetWorth: number;
 };
 
-export default function NetWorth({ remainingNetWorth }: NetWorthProps) {
-  const { rates } = useAppSelector((state) => state.currency);
+export default function NetWorth({
+  remainingNetWorth,
+  initialNetWorth,
+}: NetWorthProps) {
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
   const currencies = ["USD", "UAH"];
+
+  const { rates } = useAppSelector((state) => state.currency);
 
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
 
-  const router = useRouter();
+  const numberSpring = useSpring({
+    number: remainingNetWorth,
+    from: { number: initialNetWorth },
+  });
 
   const handleCurrencyChange = (selectedValue: string) => {
     if (selectedValue === selectedCurrency) return;
@@ -38,17 +47,20 @@ export default function NetWorth({ remainingNetWorth }: NetWorthProps) {
   };
 
   return (
-    <div className="lg:w-[500px] xl:w-[600px] md:w-[360px] max-w-[700px] h-[106px] bg-[#3D4D55] text-white py-5 px-10 md:py-2 md:px-4 font-semibold text-4xl md:text-2xl rounded-xl lg:text-4xl flex justify-between items-center">
-      <div>{`${
-        selectedCurrency === "USD" ? "$" : "₴"
-      }${remainingNetWorth.toLocaleString()}`}</div>
+    <div className=" lg:w-[500px] xl:w-[600px] md:w-[360px] phone:w-full phone:rounded-none max-w-[700px] h-[106px] bg-[#3D4D55] text-white py-5 px-10 md:py-2 md:px-4 font-semibold text-4xl md:text-2xl rounded-xl lg:text-4xl flex justify-between items-center">
+      <div>
+        {`${selectedCurrency === "USD" ? "$" : "₴"}`}
+        <animated.span>
+          {numberSpring.number.to((val) => Math.round(val).toLocaleString())}
+        </animated.span>
+      </div>
       <div>
         <Listbox
           value={selectedCurrency}
           onChange={(newValue: string) => handleCurrencyChange(newValue)}
         >
           <div className="relative mt-1  ">
-            <Listbox.Button className="relative cursor-pointer text-center text-white bg-[#3D4D55] sm:w-[120px] lg:w-[140px] rounded-lg py-2 pl-3 pr-10  shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 ">
+            <Listbox.Button className="relative cursor-pointer text-center text-white bg-[#3D4D55] sm:w-[120px] lg:w-[140px] phone:w-[140px] rounded-lg py-2 pl-3 pr-10  shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 ">
               <span className="block truncate">{selectedCurrency}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon
@@ -63,7 +75,7 @@ export default function NetWorth({ remainingNetWorth }: NetWorthProps) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute mt-1 max-h-60 w-[140px] overflow-auto bg-[#3D4D55] rounded-md py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none ">
+              <Listbox.Options className="absolute mt-1 max-h-60 w-[140px] overflow-auto bg-[#3D4D55] rounded-md py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none phone:z-40 ">
                 {currencies.map((currency, index) => (
                   <Listbox.Option
                     key={index}

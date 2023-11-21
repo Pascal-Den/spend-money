@@ -59,21 +59,23 @@ export default function Product({
 
   return (
     <>
-      <div className="w-[360px] rounded-lg overflow-hidden shadow-lg  bg-white mt-2">
-        <div className="flex-center">
-          {image && (
-            <Image
-              className="mx-auto  pt-6 pl-6 w-[150px] h-[150px]"
-              src={image}
-              alt={name}
-              width={150}
-              height={150}
-            />
-          )}
-          <div className="px-6 py-4 text-center min-w-[200px] w-full">
+      <div className="w-[360px]  rounded-lg overflow-hidden shadow-lg  bg-white mt-2">
+        <div className="">
+          <div className="pt-2">
+            {image && (
+              <Image
+                className="mx-auto  w-[150px] h-[150px]"
+                src={image}
+                alt={name}
+                width={150}
+                height={150}
+              />
+            )}
+          </div>
+          <div className="px-3 py-2  min-w-[200px] w-full text-center">
             <div className="font-bold text-xl mb-2">{name}</div>
             <div className="font-bold text-4xl text-green-700 ">
-              {price.toFixed(0)} {isUsd ? "$" : "₴"}
+              {Math.round(price).toLocaleString()} {isUsd ? "$" : "₴"}
             </div>
           </div>
         </div>

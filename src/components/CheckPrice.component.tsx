@@ -22,9 +22,9 @@ export default function CheckPrice({
       >
         <div className="flex justify-between items-center">
           <div className="text-lg font-semibold">{name}</div>
-          <div className="flex items-center">
+          <div className="flex items-center justify-between w-[185px]">
             <div className="text-sm text-gray-600 mr-4">x{quantity}</div>
-            <div className="text-base font-medium">
+            <div className="text-base font-medium text-green-700">
               {price.toFixed(0)}
               {isUsd ? "$" : "₴"}
             </div>

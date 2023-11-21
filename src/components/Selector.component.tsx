@@ -25,9 +25,9 @@ export default function Selector({
   return (
     <div>
       <Listbox value={selectedBillionaire} onChange={handleSelectionChange}>
-        <div className="relative  w-full h-full">
-          <Listbox.Button className="lg:w-[520px] lg:pl-20 relative xl:w-[574px] sm:w-[360px] sm:h-[106px]  rounded-lg bg-[#3D4D55] py-[33px] xl:pl-40   pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300  cursor-pointer text-white ">
-            <span className=" truncate lg:text-4xl lg:font-semibold flex justify-end sm:text-2xl ">
+        <div className="relative  w-full h-full  ">
+          <Listbox.Button className="lg:w-[520px] lg:pl-20 relative xl:w-[574px] md:w-[360px] md:h-[106px] phone:w-[380px] phone:mt-2 rounded-lg bg-[#3D4D55] py-[33px] xl:pl-40    pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300  cursor-pointer text-white ">
+            <span className=" truncate lg:text-4xl font-semibold flex justify-end md:text-2xl  phone:text-2xl ">
               {selectedBillionaire?.personName}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 ">
