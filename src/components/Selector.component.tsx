@@ -26,8 +26,8 @@ export default function Selector({
     <div>
       <Listbox value={selectedBillionaire} onChange={handleSelectionChange}>
         <div className="relative  w-full h-full  ">
-          <Listbox.Button className="lg:w-[520px] lg:pl-20 relative xl:w-[574px] md:w-[360px] md:h-[106px] phone:w-[380px] phone:mt-2 rounded-lg bg-[#3D4D55] py-[33px] xl:pl-40    pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300  cursor-pointer text-white ">
-            <span className=" truncate lg:text-4xl font-semibold flex justify-end md:text-2xl  phone:text-2xl ">
+          <Listbox.Button className="lg:w-[520px] lg:pl-20 relative xl:w-[574px] md:w-[360px] md:h-[106px] phone:w-[380px] phone:mt-0 rounded-lg bg-[#3D4D55] py-[33px] xl:pl-40    pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300  cursor-pointer text-white phone:rounded-t-none phone:border-t-[1px] phone:p-[2px] phone:pr-[34px] phone:h-[66px] ss:w-[320px]">
+            <span className=" truncate lg:text-4xl font-semibold flex justify-end md:text-2xl  phone:text-2xl items-center">
               {selectedBillionaire?.personName}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 ">
