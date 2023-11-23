@@ -7,7 +7,7 @@ import {
   changeCurrencyProduct,
   clearCurrencyProduct,
 } from "@/store/slices/favorite";
-import CustomListbox from "@/components/Select.ui.component";
+import CustomListbox from "@/components/Selector.component";
 
 type NetWorthProps = {
   remainingNetWorth: number;
@@ -54,34 +54,6 @@ export default function NetWorth({
         </animated.span>
       </div>
       <div>
-        {/*<Listbox*/}
-        {/*  value={selectedCurrency}*/}
-        {/*  onChange={(newValue: string) => handleCurrencyChange(newValue)}*/}
-        {/*>*/}
-        {/*  <div className="relative mt-1  ">*/}
-        {/*    <Listbox.Button className="relative cursor-pointer text-center text-white bg-[#3D4D55] sm:w-[120px] lg:w-[140px] phone:w-[140px] rounded-lg py-2 pl-3 pr-10  shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 ">*/}
-        {/*      <span className="block truncate">{selectedCurrency}</span>*/}
-        {/*      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">*/}
-        {/*        <ChevronUpDownIcon*/}
-        {/*          className="h-5 w-5 text-gray-400"*/}
-        {/*          aria-hidden="true"*/}
-        {/*        />*/}
-        {/*      </span>*/}
-        {/*    </Listbox.Button>*/}
-        {/*    <Transition*/}
-        {/*      as={Fragment}*/}
-        {/*      leave="transition ease-in duration-100"*/}
-        {/*      leaveFrom="opacity-100"*/}
-        {/*      leaveTo="opacity-0"*/}
-        {/*    >*/}
-        {/*      <Listbox.Options className="absolute mt-1 max-h-60 w-[140px] overflow-auto bg-[#3D4D55] rounded-md py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none phone:z-40 ">*/}
-        {/*        {currencies.map((currency) => (*/}
-        {/*          <SelectorOptions key={currency} person={currency} />*/}
-        {/*        ))}*/}
-        {/*      </Listbox.Options>*/}
-        {/*    </Transition>*/}
-        {/*  </div>*/}
-        {/*</Listbox>*/}
         <CustomListbox
           options={currencies}
           selectedValue={selectedCurrency}

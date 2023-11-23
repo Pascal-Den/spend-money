@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Selector from "@/components/Selector.component";
+import Selector from "@/components/OligarchSelector.component";
 import { useAppSelector } from "@/store/hooks";
 import NetWorth from "./NetWorth.component";
 

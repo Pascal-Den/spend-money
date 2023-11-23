@@ -1,64 +1,72 @@
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useRouter } from "next/navigation";
+import { Listbox, Transition } from "@headlessui/react";
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { Fragment } from "react";
+import SelectorOptions from "@/components/SelectorOptions.component";
 import { OligarchType } from "@/types";
-import { setProductClear } from "@/store/slices/favorite";
-import CustomListbox from "@/components/Select.ui.component";
 
-export default function Selector({
-  selectedBillionaire,
-}: {
-  selectedBillionaire: OligarchType;
-}) {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state) => state.billionaires);
+type CustomListboxProps = {
+  options: OligarchType[] | string[];
+  selectedValue: OligarchType | string;
+  handleValueChange: (value: string & OligarchType) => void;
+  width: string;
+  height: string;
+  span?: string;
+  isLarge: boolean;
+  isCurrency: boolean;
+  selectedItemText: string;
+};
 
-  const handleSelectionChange = (person: OligarchType) => {
-    if (person.id === selectedBillionaire.id) return;
-    router.push(`/${person.id}`);
-    dispatch(setProductClear());
-  };
-
+const CustomListbox = ({
+  options,
+  selectedValue,
+  handleValueChange,
+  width,
+  height,
+  span,
+  isLarge,
+  isCurrency,
+  selectedItemText,
+}: CustomListboxProps) => {
   return (
-    <div>
-      {/*<Listbox value={selectedBillionaire} onChange={handleSelectionChange}>*/}
-      {/*  <div className="relative  w-full h-full  ">*/}
-      {/*    <Listbox.Button className="lg:w-[520px] lg:pl-20 relative xl:w-[574px] md:w-[360px] md:h-[106px] phone:w-[380px] phone:mt-0 rounded-lg bg-[#3D4D55] py-[33px] xl:pl-40    pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300  cursor-pointer text-white phone:rounded-t-none phone:border-t-[1px] phone:p-[2px] phone:pr-[34px] phone:h-[66px] ss:w-[320px]">*/}
-      {/*      <span className=" truncate lg:text-4xl font-semibold flex justify-end md:text-2xl  phone:text-2xl items-center">*/}
-      {/*        {selectedBillionaire?.personName}*/}
-      {/*      </span>*/}
-      {/*      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 ">*/}
-      {/*        <ChevronUpDownIcon*/}
-      {/*          className="h-5 w-5 text-gray-400"*/}
-      {/*          aria-hidden="true"*/}
-      {/*        />*/}
-      {/*      </span>*/}
-      {/*    </Listbox.Button>*/}
-      {/*    <Transition*/}
-      {/*      as={Fragment}*/}
-      {/*      leave="transition ease-in duration-100"*/}
-      {/*      leaveFrom="opacity-100"*/}
-      {/*      leaveTo="opacity-0"*/}
-      {/*    >*/}
-      {/*      <Listbox.Options className="absolute mt-1 max-h-300 w-full overflow-auto rounded-md bg-[#3D4D55] py-1 text-xl shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-xl">*/}
-      {/*        {data.map((person) => (*/}
-      {/*          <SelectorOptions key={person.id} person={person} />*/}
-      {/*        ))}*/}
-      {/*      </Listbox.Options>*/}
-      {/*    </Transition>*/}
-      {/*  </div>*/}
-      {/*</Listbox>*/}
-      <CustomListbox
-        options={data}
-        selectedValue={selectedBillionaire}
-        handleValueChange={handleSelectionChange}
-        width="lg:w-[520px] lg:pl-20 relative xl:w-[574px] md:w-[360px] md:h-[106px] phone:w-[380px] phone:mt-0 rounded-lg bg-[#3D4D55] py-[33px] xl:pl-40 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300  cursor-pointer text-white phone:rounded-t-none phone:border-t-[1px] phone:p-[2px] phone:pr-[34px] phone:h-[66px] ss:w-[320px] md:pr-[25px]"
-        height="xl:w-[574px] md:w-[360px] md:h-[106px] phone:w-[380px] phone:mt-0 rounded-lg bg-[#3D4D55] py-[33px] xl:pl-40 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300  cursor-pointer text-white phone:rounded-t-none phone:border-t-[1px] phone:p-[2px] phone:pr-[34px] phone:h-[66px] ss:w-[320px]"
-        isLarge={true}
-        span="lg:text-4xl font-semibold flex justify-end md:text-2xl  phone:text-2xl items-center"
-        isCurrency={false}
-        selectedItemText={selectedBillionaire?.personName}
-      />
-    </div>
+    <Listbox value={selectedValue} onChange={handleValueChange}>
+      <div
+        className={`relative mt-1 ${isLarge ? "relative  w-full h-full" : ""}`}
+      >
+        <Listbox.Button
+          className={`relative cursor-pointer text-center text-white bg-[#3D4D55] ${width} ${height} rounded-lg py-2 pl-3 pr-10 shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 `}
+        >
+          <span className={`block truncate ${span}`}>{selectedItemText}</span>
+          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+            <ChevronUpDownIcon
+              className="h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </span>
+        </Listbox.Button>
+        <Transition
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Listbox.Options
+            className={`absolute mt-1 max-h-300 ${
+              isLarge ? "w-full" : "w-[140px]"
+            } overflow-auto rounded-md bg-[#3D4D55] py-1 ${
+              isCurrency ? "text-xl" : "text-base"
+            } shadow-lg ring-1 ring-black/5 focus:outline-none`}
+          >
+            {options.map((item, index) => (
+              <SelectorOptions
+                key={isCurrency ? (item as OligarchType).id : index}
+                person={item}
+              />
+            ))}
+          </Listbox.Options>
+        </Transition>
+      </div>
+    </Listbox>
   );
-}
+};
+
+export default CustomListbox;
