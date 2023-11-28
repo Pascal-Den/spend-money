@@ -30,7 +30,7 @@ const CustomListbox = ({
   return (
     <Listbox value={selectedValue} onChange={handleValueChange}>
       <div
-        className={`relative mt-1 ${isLarge ? "relative  w-full h-full" : ""}`}
+        className={`relative ${isLarge ? "relative  w-full h-full" : ""}`}
       >
         <Listbox.Button
           className={`relative cursor-pointer text-center text-white bg-[#3D4D55] ${width} ${height} rounded-lg py-2 pl-3 pr-10 shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 `}
@@ -50,7 +50,7 @@ const CustomListbox = ({
           leaveTo="opacity-0"
         >
           <Listbox.Options
-            className={`absolute mt-1 max-h-300 ${
+            className={`absolute max-h-300 ${
               isLarge ? "w-full" : "w-[140px]"
             } overflow-auto rounded-md bg-[#3D4D55] py-1 ${
               isCurrency ? "text-xl" : "text-base"

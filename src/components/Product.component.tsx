@@ -59,7 +59,7 @@ export default function Product({
 
   return (
     <>
-      <div className="w-[360px]  rounded-lg overflow-hidden shadow-lg  bg-white mt-2">
+      <div className="w-[360px]  rounded-lg overflow-hidden shadow-lg  bg-white mt-4">
         <div className="">
           <div className="pt-2">
             {image && (

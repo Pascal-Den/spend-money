@@ -28,7 +28,7 @@ export function Billionaires({ squareImage, netWorth, id }: BillionairesProps) {
           <Image
             src={squareImage}
             alt="avatar "
-            className="rounded-full border-[3px] absolute md:ml-1 lg:ml-2 z-50  phone:w-[60px] phone:w-[60px]  md:w-[88px] md:h-[88px]  lg:w-[100px] lg:h-[100px] md:top-[13px] lg:top-[7px]  phone:top-[66.5px] phone:ml-1"
+            className="rounded-full border-[3px] absolute md:ml-1 lg:ml-2 z-50  phone:w-[60px] md:w-[88px] md:h-[88px]  lg:w-[100px] lg:h-[100px] md:top-[9px] lg:top-[3px]  phone:top-[63.5px] phone:ml-1"
             width={100}
             height={100}
           />

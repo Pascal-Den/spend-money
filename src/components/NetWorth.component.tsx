@@ -46,7 +46,7 @@ export default function NetWorth({
   };
 
   return (
-    <div className=" lg:w-[500px] xl:w-[600px] md:w-[360px] phone:w-full phone:rounded-none max-w-[700px] h-[106px] bg-[#3D4D55] text-white py-5 px-10 md:py-2 md:px-4 font-semibold text-4xl md:text-2xl rounded-xl lg:text-4xl flex justify-between items-center phone:text-2xl phone:p-[2px] phone:h-[60px] ss:text-xl">
+    <div className=" lg:w-[500px] xl:w-[600px] md:w-[360px] phone:w-full phone:rounded-none max-w-[700px] h-[106px] bg-[#3D4D55] text-white py-5 px-10 md:py-2 md:px-4 font-semibold text-4xl md:text-2xl rounded-lg lg:text-4xl flex justify-between items-center phone:text-2xl phone:p-[2px] phone:h-[60px] ss:text-xl">
       <div>
         {`${selectedCurrency === "USD" ? "$" : "₴"}`}
         <animated.span>
