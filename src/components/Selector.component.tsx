@@ -50,7 +50,7 @@ const CustomListbox = ({
           leaveTo="opacity-0"
         >
           <Listbox.Options
-            className={`absolute max-h-300 ${
+            className={`absolute max-h-300 z-20 ${
               isLarge ? "w-full" : "w-[140px]"
             } overflow-auto rounded-md bg-[#3D4D55] py-1 ${
               isCurrency ? "text-xl" : "text-base"
@@ -58,7 +58,7 @@ const CustomListbox = ({
           >
             {options.map((item, index) => (
               <SelectorOptions
-                key={isCurrency ? (item as OligarchType).id : index}
+                key={index}
                 person={item}
               />
             ))}
