@@ -3,7 +3,7 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import { OligarchType } from "@/types";
 
 type SelectorOptionsProps = {
-  person: OligarchType | string;
+  person: OligarchType | string ;
 };
 
 export default function SelectorOptions({ person }: SelectorOptionsProps) {

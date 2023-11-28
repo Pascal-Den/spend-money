@@ -10,22 +10,30 @@ import Check from "@/components/Check.component";
 import { fetchFavorite } from "@/store/slices/favorite/operation";
 import { fetchRates } from "@/store/slices/currency";
 import Loading from "@/app/[id]/loading";
+import Header from "@/components/Header";
 
 export default function HomeId({ params }: { params: { id: string } }) {
   const dispatch = useAppDispatch();
 
-  const { data } = useAppSelector((state) => state.billionaires);
+  const {data} = useAppSelector(state => state.billionaires)
   const { favorite, loading } = useAppSelector((state) => state.favorite);
+  const {year } = useAppSelector(state => state.billionaires)
 
   useEffect(() => {
     dispatch(fetchBillionaires());
     dispatch(fetchFavorite());
     dispatch(fetchRates());
   }, [dispatch]);
+  
+
+  console.log(data);
+  
 
   return (
     <div className="bg-[#9FA4A3] min-h-screen">
+             <Header/>
       <div className="container mx-auto py-10">
+ 
         {data
           ?.filter((billionaire) => billionaire.id === params.id)
           .map((billionaire) => (

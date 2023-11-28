@@ -3,6 +3,7 @@ export type OligarchType = {
   personName: string;
   squareImage: string;
   netWorth: number;
+  year: string;
 };
 
 export type ProductType = {
@@ -24,5 +25,5 @@ export type CurrencyType = {
   exchangedate: string;
   r030: number;
   rate: number;
-  txt: string; 
+  txt: string;
 };

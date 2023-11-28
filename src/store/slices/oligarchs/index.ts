@@ -7,6 +7,7 @@ interface billionairesSliceState {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   isUsd: boolean;
+  year: string;
 }
 
 const initialState: billionairesSliceState = {
@@ -14,6 +15,7 @@ const initialState: billionairesSliceState = {
   status: "idle",
   error: null,
   isUsd: true,
+  year: "2021",
 };
 
 const billionairesSlice = createSlice({
@@ -42,6 +44,9 @@ const billionairesSlice = createSlice({
       }
       state.isUsd = true;
     },
+    changeYear: (state, action: PayloadAction<string>) => {
+      state.year = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -59,5 +64,6 @@ const billionairesSlice = createSlice({
   },
 });
 
-export const { changeCurrency, clearCurrency } = billionairesSlice.actions;
+export const { changeCurrency, clearCurrency, changeYear } =
+  billionairesSlice.actions;
 export default billionairesSlice.reducer;

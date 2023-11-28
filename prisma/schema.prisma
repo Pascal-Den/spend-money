@@ -15,6 +15,7 @@ model Oligarch {
   personName  String
   squareImage String
   netWorth    Float
+  year        String
 }
 
 model Good {
