@@ -11,7 +11,11 @@ export default function Selector({
 }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+const {year } = useAppSelector(state => state.billionaires)
+
   const { data } = useAppSelector((state) => state.billionaires);
+
+  const filtredData = data.filter(oligarch => oligarch.year === year)
 
   const handleSelectionChange = (person: OligarchType) => {
     if (person.id === selectedBillionaire.id) return;
@@ -22,7 +26,7 @@ export default function Selector({
   return (
     <div>
       <CustomListbox
-        options={data}
+        options={filtredData}
         selectedValue={selectedBillionaire}
         handleValueChange={handleSelectionChange}
         width="lg:w-[500px] lg:pl-20 relative xl:w-[574px] md:w-[360px] lg-w-[500px] md:h-[106px] phone:w-[380px] phone:mt-0 rounded-lg bg-[#3D4D55] py-[33px] xl:pl-40 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300  cursor-pointer text-white phone:rounded-t-none phone:border-t-[1px] phone:p-[2px] phone:pr-[34px] phone:h-[66px] ss:w-[320px] md:pr-[25px]"

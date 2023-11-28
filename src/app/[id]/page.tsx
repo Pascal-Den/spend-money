@@ -17,16 +17,13 @@ export default function HomeId({ params }: { params: { id: string } }) {
 
   const {data} = useAppSelector(state => state.billionaires)
   const { favorite, loading } = useAppSelector((state) => state.favorite);
-  const {year } = useAppSelector(state => state.billionaires)
+
 
   useEffect(() => {
     dispatch(fetchBillionaires());
     dispatch(fetchFavorite());
     dispatch(fetchRates());
   }, [dispatch]);
-  
-
-  console.log(data);
   
 
   return (
