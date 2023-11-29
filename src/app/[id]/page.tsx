@@ -42,7 +42,7 @@ export default function HomeId({ params }: { params: { id: string } }) {
           ))}
 
         <Loading loading={loading}>
-          <div className="flex flex-wrap md:justify-between xl:justify-between py-4 lg:justify-around phone:justify-center">
+          <div className="flex flex-wrap md:justify-between xl:justify-between py-4 lg:justify-between phone:justify-center">
             {favorite?.map((product) => (
               <Product
                 oligarchId={params.id}
