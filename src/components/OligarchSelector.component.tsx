@@ -11,11 +11,11 @@ export default function Selector({
 }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-const {year } = useAppSelector(state => state.billionaires)
+  const { year } = useAppSelector((state) => state.billionaires);
 
   const { data } = useAppSelector((state) => state.billionaires);
 
-  const filtredData = data.filter(oligarch => oligarch.year === year)
+  const filtredData = data.filter((oligarch) => oligarch.year === year);
 
   const handleSelectionChange = (person: OligarchType) => {
     if (person.id === selectedBillionaire.id) return;

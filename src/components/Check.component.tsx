@@ -7,10 +7,8 @@ export default function Check() {
 
   if (fullPrice) {
     return (
-      <div className="bg-gray-100 p-4 rounded-md my-6 max-w-[500px] mx-auto">
-        <div className="text-2xl font-  bold mb-4 text-center">
-          Your Receipt
-        </div>
+      <div className="bg-white  p-4 rounded-md my-6 max-w-[500px] mx-auto ">
+        <div className="text-2xl font-bold mb-4 text-center">Your Receipt</div>
         {favorite.map((fav) => (
           <CheckPrice
             key={fav.id}

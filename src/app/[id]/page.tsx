@@ -15,22 +15,21 @@ import Header from "@/components/Header";
 export default function HomeId({ params }: { params: { id: string } }) {
   const dispatch = useAppDispatch();
 
-  const {data} = useAppSelector(state => state.billionaires)
-  const { favorite, loading } = useAppSelector((state) => state.favorite);
-
+  const { data } = useAppSelector((state) => state.billionaires);
+  const { favorite, fullPrice, loading } = useAppSelector(
+    (state) => state.favorite,
+  );
 
   useEffect(() => {
     dispatch(fetchBillionaires());
     dispatch(fetchFavorite());
     dispatch(fetchRates());
   }, [dispatch]);
-  
 
   return (
     <div className="bg-[#9FA4A3] min-h-screen">
-             <Header/>
+      <Header />
       <div className="container mx-auto py-10">
- 
         {data
           ?.filter((billionaire) => billionaire.id === params.id)
           .map((billionaire) => (
@@ -57,8 +56,9 @@ export default function HomeId({ params }: { params: { id: string } }) {
             ))}
           </div>
         </Loading>
-
-        <Check />
+        <div className=" p-4">
+          <Check />
+        </div>
       </div>
     </div>
   );

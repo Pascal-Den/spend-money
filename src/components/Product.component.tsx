@@ -59,12 +59,12 @@ export default function Product({
 
   return (
     <>
-      <div className="lg:w-[500px] sm:w-[360px] xl:w-[360px] rounded-lg overflow-hidden shadow-lg  bg-white mt-4">
+      <div className="lg:w-[500px] sm:w-[360px] xl:w-[360px] rounded-lg overflow-hidden shadow-lg  bg-white mt-6">
         <div className="">
           <div className="pt-2">
             {image && (
               <Image
-                className="mx-auto  w-[150px] h-[150px]"
+                className="mx-auto  max-w-full h-[150px]"
                 src={image}
                 alt={name}
                 width={150}
@@ -85,7 +85,7 @@ export default function Product({
             disabled={quantity <= 0}
             gradient={true}
           >
-            -
+            Sell
           </UIButton>
           <input
             className="border rounded py-2 px-4 w-[150px] focus:appearance-none no-spinners"
@@ -100,7 +100,7 @@ export default function Product({
             }
             gradient={false}
           >
-            +
+            Buy
           </UIButton>
         </div>
       </div>

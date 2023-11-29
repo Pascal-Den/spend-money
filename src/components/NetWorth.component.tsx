@@ -34,12 +34,16 @@ export default function NetWorth({
   const handleCurrencyChange = (selectedValue: string) => {
     if (selectedValue === selectedCurrency) return;
     setSelectedCurrency(selectedValue);
+
+    const newUrl = `?currency=${selectedValue}`;
+
+    router.push(newUrl);
+
+    // Виконайте потрібні дії зміни валюти без використання then()
     if (selectedValue === "UAH") {
-      router.push(`?currency=${selectedValue}`);
       dispatch(changeCurrency(rates));
       dispatch(changeCurrencyProduct(rates));
     } else {
-      router.push(`?currency=${selectedValue}`);
       dispatch(clearCurrency(rates));
       dispatch(clearCurrencyProduct(rates));
     }
