@@ -25,3 +25,8 @@ model Good {
   image    String
   quantity Float
 }
+
+model Admin {
+  id       String @id @default(uuid())
+  password String
+}

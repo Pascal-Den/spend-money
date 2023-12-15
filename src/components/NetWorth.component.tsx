@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { changeCurrency, clearCurrency } from "@/store/slices/oligarchs";
 import { useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   changeCurrencyProduct,
   clearCurrencyProduct,
@@ -21,6 +21,7 @@ export default function NetWorth({
   const dispatch = useAppDispatch();
   const router = useRouter();
   const currencies = ["USD", "UAH"];
+  const params = useSearchParams();
 
   const { rates } = useAppSelector((state) => state.currency);
 
@@ -35,11 +36,14 @@ export default function NetWorth({
     if (selectedValue === selectedCurrency) return;
     setSelectedCurrency(selectedValue);
 
-    const newUrl = `?currency=${selectedValue}`;
+    const year = params.get("year");
 
-    router.push(newUrl);
+    if (year) {
+      router.push(`?currency=${selectedValue}&year=${year}`);
+    } else {
+      router.push(`?year=${selectedValue}`);
+    }
 
-    // Виконайте потрібні дії зміни валюти без використання then()
     if (selectedValue === "UAH") {
       dispatch(changeCurrency(rates));
       dispatch(changeCurrencyProduct(rates));

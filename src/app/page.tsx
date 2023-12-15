@@ -8,7 +8,6 @@ export default function Home() {
 
   useEffect(() => {
     router.push("/rinat-akhmetov-2021");
-    localStorage.setItem('selectedYear', '2021');
   }, [router]);
 
   return <div className="container mx-auto "></div>;

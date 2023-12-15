@@ -3,7 +3,7 @@ import CustomListbox from "./Selector.component";
 import { useEffect, useState } from "react";
 import { changeYear } from "@/store/slices/oligarchs";
 import { useAppSelector } from "@/store/hooks";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { setProductClear } from "@/store/slices/favorite";
 
 const years = ["2021", "2022", "2023"];
@@ -13,7 +13,7 @@ export default function Header() {
 
   const { data } = useAppSelector((state) => state.billionaires);
   const router = useRouter();
-
+  const params = useSearchParams();
   const [selectedYear, setSelectedYear] = useState("2021");
 
   useEffect(() => {
@@ -34,7 +34,15 @@ export default function Header() {
       (oligarch) => oligarch.year === selectedValue,
     );
     if (firstMillionaireOfYear) {
-      router.push(`/${firstMillionaireOfYear.id}`);
+      const currency = params.get("currency");
+      if (currency) {
+        router.push(
+          `/${firstMillionaireOfYear.id}?currency=${currency}&year=${selectedValue}`,
+        );
+      } else {
+        router.push(`/${firstMillionaireOfYear.id}?year=${selectedValue}`);
+      }
+
       dispatch(setProductClear());
     }
     dispatch(changeYear(selectedValue));
